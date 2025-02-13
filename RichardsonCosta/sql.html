@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> SQLs e comandos</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+
+</head>
+
+<body>
+    <div id="area-cabecalho">
+
+        <div id="area-logo">
+            <h1>Suporte</h1>
+
+        </div>
+
+        <div id="area-menu">
+
+            <a href="index.html">Home</a>
+            <a href="base.html">Base de Conhecimentos</a>
+            <a href="tutoriais.html">Tutoriais</a>
+            <a class="selecionado" href="sql.html">SQLs</a>
+            <a href="downloads.html">Downloads</a>
+
+
+        </div>
+
+    </div>
+
+    <div id="area-principal">
+
+        <div id="area-sql"> 
+
+            <div>
+                <h2> SQLs e comandos CMD</h2>
+                <br>
+                    <span class="descricao"> Encontre SQLs e comandos </span>
+                <br>
+                <br>
+                <br>
+                    <p> Nesta seção você vai encontrar um acervo de sqls e comandos 
+                        de uso rotineiro do suporte para as mais diversas situações</p>
+                    <br>
+
+                    <div> <p class="buscar-conteudo">Buscar conteudo</p>
+
+    por enquanto buscar num ta funcionando, dale um <span class="negrito">CTRL+F</span>
+
+                    </div>
+
+                    <br>
+        
+
+                    <br> 
+
+    <div class="postagem"> <!-- abertura postagem-->
+    <h4> SQL - Desbloqueio de tabela </h4>
+    <span class="descricao-sql"> SQL para alterar uma Trigger que protege a integridade do banco de dados de alterações indevidas e desbloqueando as tabelas </span>
+    <br>
+    <br>
+
+<pre class="codigo">
+ALTER TRIGGER TRIG_RDB$TRIGGERS_1 INACTIVE;
+ALTER TRIGGER INS$caixa_abertura_turno INACTIVE;
+</pre>
+
+<br>
+<br>
+<hr>
+    </div> <!-- fechamento postagem-->
+
+    <div class="postagem"> <!-- abertura postagem-->
+        <h4> SQL - Reabrir caixa fechado no banco </h4>
+        <span class="descricao-sql"> SQL para alterar o caixa_abertura_turno reabrindo um caixa já ecerrado </span>
+        <br>
+        <br>
+    
+    <pre class="codigo">
+ALTER TRIGGER TRIG_RDB$TRIGGERS_1 INACTIVE;
+ALTER TRIGGER INS$caixa_abertura_turno INACTIVE; 
+--LINHA DE CODIGO PARA DESBLOQUER ALTERACOES NA TABELA
+
+UPDATE CAIXA_ABERTURA_TURNO
+SET FECHAMENTO_DATA=null,FECHAMENTO_HORA=null
+WHERE COD_CAIXA_ABERTURA_TURNO='2447'
+--LINHA DE CODIGO PARA ALTERAR O CAIXA
+    </pre>
+    
+    <br>
+    <br>
+    <hr>
+        </div> <!-- fechamento postagem-->
+                    
+ <div class="postagem"> <!-- abertura postagem-->
+    <h4> CMD - Restore do Roteador </h4>
+    <span class="descricao-sql"> Comando CMD para restore de banco de dados do roteador corrompido </span>
+    <br>
+    <br>
+
+    
+
+<pre class="codigo">
+SET ISC_USER=SYSDBA
+SET ISC_PASSWORD=masterkey
+GFIX -C ALL C:\REDESOFT\ROTEADOR\BANCO.FDB
+GFIX -M -I C:\REDESOFT\ROTEADOR\BANCO.FDB
+GBAK -G -B -V C:\REDESOFT\ROTEADOR\BANCO.FDB C:\REDESOFT\ROTEADOR\BKP_BANCO.GBK
+GBAK -G -R -V -P 4096 C:\REDESOFT\ROTEADOR\BKP_BANCO.GBK C:\REDESOFT\ROTEADOR\BANCO_RECUPERADO.FDB
+GFIX -V -F C:\REDESOFT\ROTEADOR\BANCO_RECUPERADO.FDB
+</pre>
+
+<br>
+<br>
+<hr>
+</div> <!-- fechamento postagem-->
+
+<div class="postagem"> <!-- abertura postagem-->
+    <h4> CMD - Restore do PDV </h4>
+    <span class="descricao-sql"> Comando CMD para restore de banco de dados do PDV corrompido </span>
+    <br>
+    <br>
+
+<pre class="codigo">
+<span class="negrito">Primeira tentativa - Normal</span>
+
+SET ISC_USER=SYSDBA
+SET ISC_PASSWORD=masterkey
+GFIX -C ALL C:\REDESOFT\B2CLICKPAF\BANCO.FDB
+GFIX -M -I C:\REDESOFT\B2CLICKPAF\BANCO.FDB
+gbak -g -b -v -n -i BANCO.FDB BKP_BANCO.GBK
+GBAK -G -R -V -P 4096 C:\REDESOFT\B2CLICKPAF\BKP_BANCO.GBK C:\REDESOFT\B2CLICKPAF\BANCO_RECUPERADO.FDB
+GFIX -V -F C:\REDESOFT\B2CLICKPAF\BANCO_RECUPERADO.FDB
+
+<span class="negrito">Segunda tentativa - Crítica</span>
+
+SET ISC_USER=SYSDBA
+SET ISC_PASSWORD=masterkey
+GFIX -C ALL C:\REDESOFT\B2CLICKPAF\BANCO.FDB
+GFIX -M -I C:\REDESOFT\B2CLICKPAF\BANCO.FDB
+GBAK -G -B -V -IG C:\REDESOFT\B2CLICKPAF\BANCO.FDB C:\REDESOFT\B2CLICKPAF\BKP_BANCO.GBK
+GBAK -G -R -V -P 4096 C:\REDESOFT\B2CLICKPAF\BKP_BANCO.GBK C:\REDESOFT\B2CLICKPAF\BANCO_RECUPERADO.FDB
+GFIX -V -F C:\REDESOFT\B2CLICKPAF\BANCO_RECUPERADO.FDB
+</pre>
+
+<br>
+<br>
+<hr>
+</div> <!-- fechamento postagem-->
+
+<div class="postagem"> <!-- abertura postagem-->
+    <h4> SQL - Contagem de vendas em contingência</h4>
+    <span class="descricao-sql"> SQL para contagem de vendas em contingÇencias no banco do PDV</span>
+    <br>
+    <br>
+
+<pre class="codigo">
+SELECT COUNT(*) FROM EVENTO
+WHERE EXECUTADO = 'FALSE'
+AND EVENTO ='TRANSMITIR NFCE CONTINGENCIA'
+</pre>
+
+<br>
+<br>
+<hr>
+    </div> <!-- fechamento postagem-->
+
+
+    <div class="postagem"> <!-- abertura postagem-->
+        <h4> SQL - Listagem de vendas em contingência</h4>
+        <span class="descricao-sql"> SQL para listar e visualizar as vendas em contingência no banco do PDV</span>
+        <br>
+        <br>
+    
+    <pre class="codigo">
+SELECT * FROM EVENTO
+WHERE EXECUTADO <> 'TRUE'
+AND EVENTO ='TRANSMITIR NFCE CONTINGENCIA'
+    </pre>
+    
+    <br>
+    <br>
+    <hr>
+        </div> <!-- fechamento postagem-->
+
+        <div class="postagem"> <!-- abertura postagem-->
+            <h4> SQL - Cancelamento de vendas e vendas em contingencia</h4>
+            <span class="descricao-sql"> SQL para cancelamento de venda em contingência ou vendas presas por terem seu cancelamento mal executado por algum erro no sistema, geralmente vendas desse tipo travam a consolidação do PDV impedindo o envio dos caixas</span>
+            <br>
+            <br>
+        
+        <pre class="codigo">
+<span class="negrito">1 - Desbloquear tabelas </span>
+
+ALTER TRIGGER TRIG_RDB$TRIGGERS_1 INACTIVE;
+ALTER TRIGGER INS$VENDA INACTIVE;
+ALTER TRIGGER INS$VENDA_ITENS INACTIVE;
+ALTER TRIGGER INS$VENDA_FECHAMENTO INACTIVE;
+ALTER TRIGGER INS$VENDA_NFE INACTIVE;
+ALTER TRIGGER INS$evento INACTIVE;
+ALTER TRIGGER INS$autorizacao_pdv INACTIVE;
+ALTER TRIGGER INS$evento INACTIVE;
+ALTER TRIGGER INS$lmc_bico INACTIVE;
+ALTER TRIGGER INS$venda_fechamento_chq INACTIVE;
+ALTER TRIGGER INS$venda_fechamento_crt INACTIVE;
+ALTER TRIGGER INS$venda_opnf INACTIVE;
+ALTER TRIGGER INS$caixa_abertura_turno INACTIVE;
+    
+<span class="negrito">2 - Primeiro no PAF</span>
+    
+update venda
+set cod_usuario_cancelou = 180229,
+cancelada='SIM',
+cancelada_ecf='NAO',
+valor_total= null,
+numero_nf = null,
+serie = null,
+modelo = null,
+tipo_ambiente = null,
+chave_nfe = null,
+roteador = 'FALSE'
+where cod_venda = 9367;
+    
+update venda_itens
+set qtd_cancelada = quantidade,
+quantidade = 0,
+cancelado_ecf='NAO',
+valor_cancelado_ecf = total_ecf,
+total_ecf = 0,
+cod_abastecimento=null,
+roteador = 'FALSE'
+where cod_venda = 9367;
+    
+update venda_nfe
+set forma_emissao = null,
+xml = null,
+roteador = 'FALSE'
+where cod_venda = 9367
+and cod_caixa_abertura_turno = 1432;
+    
+update venda_fechamento
+set cod_usuario_cancelou = 180229,
+cancelado = 'SIM',
+roteador = 'FALSE'
+where cod_venda = 9367;
+    
+update evento set executado = 'TRUE'
+where executado = 'FALSE'
+and parametros = '9367'
+and cod_venda = 9367
+
+<span class="negrito">3 - Depois no Roteador</span>
+
+
+update ABASTECIMENTO SET
+SITUACAO = 0,
+COD_VENDA = 0
+WHERE COD_VENDA= 16977
+        </pre>
+        
+        <br>
+        <br>
+        <hr>
+            </div> <!-- fechamento postagem-->
+       
+<div class="postagem"> <!-- abertura postagem-->
+    <h4> SQL - Redução e limpeza do roteador </h4>
+    <span class="descricao-sql"> SQL para redução do tamanho do banco do roteador eliminado registros antigos e redundantes que não são mais necessarios e acabam causando lentidão no sistema </span>
+    <br>
+    <br>
+
+<pre class="codigo">
+Redução e limpeza do roteador
+ 
+<span class="negrito">1º - Parar totalmente aplicação de roteador</span>
+<span class="negrito">2º - fazer copia do banco para caso de algum problema usarmos a copia</span>
+<span class="negrito">3º - Abrir IBO console > selecionar o banco do roteador > abrir tela de execução de comandos sql 
+e colar a SQL  abaixo</span>
+ 
+(orientações da SQL) 
+ 
+- As datas em SQL são descriminadas por mês/dia/ano
+ 
+- Mudar a data da SQL para um intervalo de datas de no minimo 1 semana a contar da data atual. 
+Ex: se hoje é dia 23/11/2023 na SQL vamos colocar 11/16/2023, uma semana antes da data atual 
+e a SQL trata o mês primeiro e depois o dia. 
+ 
+- A SQL abaixo vai excluir todos os registros anteriores a data informada 
+---------------------------------------
+ALTER TRIGGER TRIG_RDB$TRIGGERS_1 INACTIVE;
+ALTER TRIGGER INS$VENDA INACTIVE;
+ALTER TRIGGER INS$VENDA_ITENS INACTIVE;
+ALTER TRIGGER INS$VENDA_FECHAMENTO INACTIVE;
+ALTER TRIGGER INS$VENDA_NFE INACTIVE;
+ALTER TRIGGER INS$evento INACTIVE;
+ALTER TRIGGER INS$autorizacao_pdv INACTIVE;
+ALTER TRIGGER INS$evento INACTIVE;
+ALTER TRIGGER INS$lmc_bico INACTIVE;
+ALTER TRIGGER INS$venda_fechamento_chq INACTIVE;
+ALTER TRIGGER INS$venda_fechamento_crt INACTIVE;
+ALTER TRIGGER INS$venda_opnf INACTIVE;
+ALTER TRIGGER INS$caixa_abertura_turno INACTIVE;
+ 
+delete from BICO_ABERTO
+where data <= '04/05/2019';
+ 
+delete from AUTORIZACAO_PDV
+where data <= '04/05/2019';
+ 
+delete from lmc_bico
+where data <= '04/05/2019';
+ 
+delete from venda_fechamento_chq
+where momento <= '04/05/2019 23:59:59';
+ 
+delete from venda_fechamento_crt
+where momento <= '04/05/2019 23:59:59';
+ 
+delete from venda_itens
+where data <= '04/05/2019';
+ 
+delete from venda
+where data <= '04/05/2019';
+ 
+delete from venda_opnf
+where data<='04/05/2019';
+ 
+delete from caixa_abertura_turno
+where abertura_data <= '04/05/2019';
+ 
+delete from venda_nfe
+where momento <= '04/05/2019 23:59:59';
+ 
+delete from venda_sat
+where momento <= '04/05/2019 23:59:59';
+ 
+delete from evento
+where data_evento <= '03/01/2023';
+---------------------------------------
+<span class="negrito">4º - Após executar o comando no banco> comitar a alteração</span>
+ 
+<span class="negrito">5º - Renomear o banco do roteador para "banco.fdb" > copiar os arquivos "gbak.exe","gfix.exe" 
+e "fbcliente.dll" de dentro da pasta C:\Program Files\Firebird\Firebird_2_5\bin para a pasta roteador</span>
+ 
+<span class="negrito">6º Após os arquivos estarem devidamente alocados na pasta do roteador> devemos abrir o CMD 
+colocar o caminho para o cmd excutar dentro da pasta do roteador</span>
+ 
+<span class="negrito">7º Executar no CMD o comando:</span>
+ 
+SET ISC_USER=SYSDBA
+SET ISC_PASSWORD=masterkey
+GFIX -C ALL C:\REDESOFT\ROTEADOR\BANCO.FDB
+GFIX -M -I C:\REDESOFT\ROTEADOR\BANCO.FDB
+GBAK -G -B -V C:\REDESOFT\ROTEADOR\BANCO.FDB C:\REDESOFT\ROTEADOR\BKP_BANCO.GBK
+GBAK -G -R -V -P 4096 C:\REDESOFT\ROTEADOR\BKP_BANCO.GBK C:\REDESOFT\ROTEADOR\BANCO_RECUPERADO.FDB
+GFIX -V -F C:\REDESOFT\ROTEADOR\BANCO_RECUPERADO.FDB
+ 
+</pre>
+
+<br>
+<br>
+<hr>
+    </div> <!-- fechamento postagem-->
+
+    <div class="postagem"> <!-- abertura postagem-->
+        <h4> SQL - Troca em massa de tributações </h4>
+        <span class="descricao-sql"> SQL para alterar para alterar e corrigir tributações de produtos em larga escala no banco de dados </span>
+        <br>
+        <br>
+    
+    <pre class="codigo">
+Para realizar essa operação da forma correta precisamos de informações relacionadas CST, CFOP e CSOSN
+A utilização desse comando é muito particular ao caso, por isso é muito bom analisar antes de tudo.
+    
+<span class="negrito">1 - Iniciamos o comando indicando a tabela no que no caso é venda_itens</span>
+as colunas e os valores que vão ser inseridos na tabela venda_itens
+    
+Exemplo
+update venda_itens
+set (a sintaxe SET da sql serve para indicarmos qual coluna da tabela vamos mudar, inserimos 
+o nome da coluna=o registro que vai ser inserido no lugar do antigo)
+    
+"update venda_itens
+set cod_produto_tributacao=74,cod_cfop=5102,csosn=102 "
+    
+<span class="negrito">2 - Dito isso um modelo de sql que mudaria tributação, cfop, csosn</span>
+    
+"update venda_itens
+set cod_produto_tributacao=74,cod_cfop=5102,csosn=102
+where cod_venda in (001,002,003,004)"
+    
+<span class="negrito">3 - Atenção as condicionais de alteração</span>
+    
+O parametro where (É a sintaxe na sql que diz em quais registros vão ser elegiveis para as mudanças, 
+mas alguns operadores logicos completam a informação)
+    
+where cod_venda = 0001 (usado para indicar um numero especifico de venda)
+    
+where cod_venda in (001,002,003,004,005,006) (Usado para multiplas vendas quando voce sabe os números 
+e quer informar, colocaria os números das vendas separadas por virgula dentro do parentese)
+    
+where between '1' and '200' (usado para um intervalo, no exemplo as vendas de 1 a 200 alteradas)
+    
+<span class="negrito">4 - Podemos combinar condicionais usando o AND</span>
+    
+Exemplo
+"update venda_itens
+set cod_produto_tributacao=74,cod_cfop=5102,csosn=102
+where cod_venda in (001,002,003,004)"
+and empresa = 12
+and data >= '07/30/2023'
+    </pre>
+    
+    <br>
+    <br>
+    <hr>
+        </div> <!-- fechamento postagem-->
+       
+        </div>
+
+        </div>
+                        
+    </div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+* {
+
+    margin: 0;
+    padding: 0;
+    
+}
+
+body {
+    font-size: 0.9em;
+    font-family: "Trebuchert MS", Helvetica, sans-serif;
+    background: #e6e6e6;
+}
+
+/* ===========================Layout=============================== */
+
+#area-cabecalho {
+background: #9ACD32;
+padding: 15px;
+text-align: center;
+}
+
+#area-logo, #area-menu {
+    padding: 10px;
+}
+
+h1 {
+    color:black;
+    font-size: 2.5 em;
+}
+
+h2 {
+    color: #4e4e4e;
+}
+
+h3 {
+    background: #ccc;
+    font-size: 2.5 em;
+}
+
+
+.branco {
+    color: white;
+}
+
+.data-postagem {
+    font-size: 0.8em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.negrito {
+    font-weight: bold;
+}
+
+.buscar-conteudo {
+    color: blue;
+}
+
+#area-principal {
+    width: 920px;
+    margin: 0 auto;
+    padding:15px;
+}
+
+#area-postagem {
+ width: 660px;
+ background: white;
+ float:left;
+}
+
+#area-sql {
+    width: 660px;
+    background: white;
+    margin: 0 auto;
+    padding:15px
+   }
+
+#area-lateral {
+    width: 240px;
+    float:right;
+   }
+
+   .conteudo-lateral {
+    background: white;
+    
+   }
+
+    .texto-lateral {
+        font-size: 0.8em;
+        padding: 5px;
+   }
+#rodape {
+    background: #ccc;
+    text-align: center;
+    padding: 15x;
+  }
+
+    .postagem {
+    margin-bottom: 2px;
+    padding: 10px;
+   }
+
+   .descricao-sql {
+    font-size: 0.8em;
+    padding: 2px;
+    color: grey;
+
+   }
+
+   .codigo {
+    width: 660px;
+    }
+
+/* ==========================Menu ===========================================*/
+
+a { 
+    text-decoration: none;
+    margin: 3px;
+}
+
+
+a:link, a:visited {
+ color: #ffff;
+ padding: 8px 12px;
+ }
+ 
+a:hover, a.selecionado {
+    color: #4e4e4e;
+    background: #fff;
+    margin: 2px;
+ }
+
+ #area-principal a {
+    color: white;
+    background: black;
+    margin: 2px;
+    padding: 2px;
+    }
+
+#area-principal a:hover {
+    color: black;
+    background: white;
+    padding: 2px;
+    }
+   
+
+ 
